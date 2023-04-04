@@ -13,6 +13,7 @@ The first thing to do is as follows:
 5. Push changes. `git push` 
 
 (Jongjin Kim) - Glad to See all of you in the team 2.
+(Chandra Kundu) - Hello everyone
 
 (Works to do)
 + Analyze the image to identify the text areas
