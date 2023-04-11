@@ -15,7 +15,7 @@ The first thing to do is as follows:
 (Jongjin Kim) - Glad to See all of you in the team 2.
 
 (Chandra Kundu) - Hello everyone
-
+.
 (Works to do)
 + Analyze the image to identify the text areas
 - Find the area of interest with texts or draw a box for the area with texts
