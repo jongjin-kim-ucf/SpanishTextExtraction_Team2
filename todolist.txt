@@ -1,0 +1,15 @@
+1. Install virtualenv: 
+pip install virtualenv
+
+2. Activate the environment
+source venv_hw3/bin/activate
+
+3. To install required package
+pip install -r requirements.txt
+
+4. To record your installed package
+pip freeze > requirements.txt
+
+5. To exit from virtualenv:
+deactivate
+
