@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 import pyocr
 import pyocr.builders
 from PIL import Image
+import pytesseract
 import os
+import csv
 
 os.environ['TESSDATA_PREFIX'] = 'C:/Program Files/Tesseract-OCR/tessdata/'
 
@@ -15,50 +17,38 @@ def extract_text(img_path):
     # Convert the image to grayscale
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+    blur = cv2.GaussianBlur(gray_img, (5, 5), 0)
+    thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3,3))
+    opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
+
     # Apply threshold to get image with only b&w (binarization)
-    _, thresh = cv2.threshold(gray_img, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)
+#    threshold_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)[1]
 
-    # Get structuring element/kernel that will be used for dilation
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-
-    # Dilate the image
-    dilated = cv2.dilate(thresh, kernel, iterations=3)
-
-    # Find contours
-    ctrs, hier = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    custom_config = r'--oem 3 --psm 3'
     
-
-    img_copy = img.copy()
-
-
-    # Initialize the OCR tool
-    tools = pyocr.get_available_tools()
-    ocr_tool = tools[0]
+    details = pytesseract.image_to_data(opening, output_type=pytesseract.Output.DICT, config=custom_config, lang='spa')
     
-    for ctr in ctrs:
-        # Get bounding box
-        x, y, w, h = cv2.boundingRect(ctr)
-        rect = cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0,255,0), 2)
-
-        # Crop the image to the bounding rectangle
-        cropped_image = img[y:y+h, x:x+w]
-
-        # Apply OCR to the cropped image
-        text = ocr_tool.image_to_string(
-            Image.fromarray(cropped_image),
-            lang='spa',
-            builder=pyocr.builders.TextBuilder()
-        )
+    parse_text = []
+    word_list = []
+    last_word = ''
     
+    for word in details['text']:
+        if word != '':
+            word_list.append(word)
+        if (last_word != '' and word == '') or (word == details['text'][-1]):
+            parse_text.append(word_list)
+            word_list = []
+
     # Print the extracted text
-    return text
+    return parse_text
 
 if __name__ == "__main__":
     for i in range(1, 5):
         img_path = f"training/training{i}.png"
-        text = extract_text(img_path)
-        with open(f"saved_texts/text{i}.txt", "w") as file:
-            file.write(text)    
+        parse_text = extract_text(img_path)
+        with open(f"saved_texts/text{i}.txt", "w", newline = "") as file:
+            csv.writer(file, delimiter = " ").writerows(parse_text)
 
     # img = cv2.imread("training/training4.png")
     # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

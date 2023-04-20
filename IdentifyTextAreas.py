@@ -1,6 +1,14 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+
+import os
+
+# Get the current file location
+file_location = os.path.dirname(os.path.abspath(__file__))
+
+# Change the current working directory to the file location
+os.chdir(file_location)
 
 def identify_text_areas(img_path):
     # Read image with opencv
@@ -16,19 +24,19 @@ def identify_text_areas(img_path):
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
 
     # Dilate the image
-    dilated = cv2.dilate(thresh, kernel, iterations=3)
+    dilated = cv2.dilate(thresh, kernel, iterations=5)
 
     # Find contours
-    ctrs, hier = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    ctrs, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
-
     img_copy = img.copy()
 
-    
     for ctr in ctrs:
         # Get bounding box
         x, y, w, h = cv2.boundingRect(ctr)
-        rect = cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0,255,0), 2)
+        
+        if (w * h >= 20 and w * h <= 1000):
+            rect = cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0,255,0), 2)
 
     return rect
 
@@ -36,8 +44,8 @@ def identify_text_areas(img_path):
 if __name__ == "__main__":
     for i in range(1, 5):
         img_path = f"training/training{i}.png"
-        rect = identify_text_areas(img_path)
-        cv2.imwrite(f"saved_images/rectanglebox{i}.jpg", rect)
+        rects = identify_text_areas(img_path)
+        cv2.imwrite(f"saved_images/rectanglebox{i}.jpg", rects)
 
     
 
