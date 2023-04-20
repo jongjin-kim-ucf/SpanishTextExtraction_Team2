@@ -20,7 +20,7 @@ The first thing to do is as follows:
 + Analyze the image to identify the text areas
 - Find the area of interest with texts or draw a box for the area with texts
 + Extract the text as a string
-- Map the image to a spanish dictionary
+- Map the image to a spanish dictionary - Use the prebuilt model.
 + Translate the text into Englilsh
 - Build a translator between spanish to english.
 + Then summarize the text
@@ -29,3 +29,14 @@ The first thing to do is as follows:
 (Important Date)
 April 21st - Due date of the project
 
+(Assignment)
+Chandra Kundu - Identify Text Areas
+Jongjin Kim - Extract Texts
+Ifte Khairul Islam - Text Translator
+Ibrahim Almansour - Text Summarizer.
+
+(Challenges)
+Picture 1 - Works best because there is no distortion.
+Picture 2 - Works better in the bottom part than the top part. The top part has a distortion.
+Picture 3 - A lot of distortion makes it hard to apprehend.
+Picture 4 - Multiple areas detection is needed. Also, the windows of the building were detected as a rectangle area.
