@@ -25,14 +25,14 @@ def identify_text_areas(img_path):
     # Get structuring element/kernel that will be used for dilation
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 7))
 
-    # Dilate the image
-    dilated_r = cv2.dilate(thresh, kernel, iterations=3)
+    # Dilate the image - blurring the image vertically
+    dilated_step1 = cv2.dilate(thresh, kernel, iterations=3)
 
     # Get structuring element/kernel that will be used for dilation
     kernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 1))
 
-    # Dilate the image
-    dilated = cv2.dilate(dilated_r, kernel2, iterations=3)
+    # Dilate the image - Blurring the image horizontally
+    dilated = cv2.dilate(dilated_step1, kernel2, iterations=3)
 
     # Find contours
     ctrs, hier = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -61,8 +61,12 @@ def identify_text_areas(img_path):
     # Display the results
     for result in results:
         x, y, w, h, new_text = result
+
+        # When we get the largest number of text in the rectangle, replace it.
         if(len(new_text)>=len(text)):
             text = new_text
+        
+        # Add a green rectangle to the image
         rect = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     return rect, text
