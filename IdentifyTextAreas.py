@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 #import matplotlib.pyplot as plt
 
+import pytesseract
+import csv 
 import os
 
 # Get the current file location
@@ -21,32 +23,59 @@ def identify_text_areas(img_path):
     _, thresh = cv2.threshold(gray_img, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)
 
     # Get structuring element/kernel that will be used for dilation
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 7))
 
     # Dilate the image
-    dilated = cv2.dilate(thresh, kernel, iterations=5)
+    dilated_r = cv2.dilate(thresh, kernel, iterations=3)
+
+    # Get structuring element/kernel that will be used for dilation
+    kernel2 = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 1))
+
+    # Dilate the image
+    dilated = cv2.dilate(dilated_r, kernel2, iterations=3)
 
     # Find contours
-    ctrs, hier = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    ctrs, hier = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
     img_copy = img.copy()
+
+    # Initialize an empty list to store the bounding rectangles and OCR outputs
+    results = []
 
     for ctr in ctrs:
         # Get bounding box
         x, y, w, h = cv2.boundingRect(ctr)
+        rect = cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0,255,0), 2)
         
-        if (w * h >= 20 and w * h <= 1000):
-            rect = cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0,255,0), 2)
+        # Crop the bounding rectangle from the grayscale image
+        crop_img = gray_img[y:y+h, x:x+w]
+        
+        # Pass the cropped image to Tesseract OCR and get the output text
+        ocr_output = pytesseract.image_to_string(crop_img, lang='spa')
+        
+        # If the OCR output contains text, store the bounding rectangle coordinates and the OCR output in a list
+        if ocr_output.strip():
+            results.append((x, y, w, h, ocr_output.strip()))
+            
+    text = ""
+    # Display the results
+    for result in results:
+        x, y, w, h, new_text = result
+        if(len(new_text)>=len(text)):
+            text = new_text
+        rect = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-    return rect
+    return rect, text
 
 
 if __name__ == "__main__":
     for i in range(1, 5):
         img_path = f"training/training{i}.png"
-        rects = identify_text_areas(img_path)
+        rects, texts = identify_text_areas(img_path)
+        print(texts)
         cv2.imwrite(f"saved_images/rectanglebox{i}.jpg", rects)
-
+        with open(f"saved_texts/text{i}.txt", "w") as file:
+            file.write(texts)
     
 
     # img = cv2.imread("training/training4.png")
