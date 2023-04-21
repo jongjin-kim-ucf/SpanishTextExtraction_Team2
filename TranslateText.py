@@ -24,5 +24,5 @@ if __name__ == "__main__":
     translate_file(input_file, output_file)
     print(f"Text translated and saved to '{output_file}'")
 
-    text = "Hola, ¿cómo estás?"
-    print(translate_text(text))
+    # text = "Hola, ¿cómo estás?"
+    # print(translate_text(text))
