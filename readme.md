@@ -52,16 +52,16 @@ Picture 3 - A lot of distortion makes it hard to apprehend. \
 Picture 4 - Multiple areas detection is needed. Also, the windows of the building were detected as a rectangle area. 
 
 # Image 
-![Original Image](training/training4.png)
+![Original Image](training/training3.png)
 
 # Text Area Detection
-![Boxed Image](identified_textareas/img4.jpg)
+![Boxed Image](identified_textareas/img3.jpg)
 
 # Text Extraction
-[text1.txt](saved_texts/text4.txt)
+[text3.txt](identified_text/text3.txt)
 
 # English Translation
-[translated1.txt](translated_texts/text1.txt)
+[translate_text3.txt](translated_text/translate_text3.txt)
 
 # Summary of the text
-[summary1.txt](summarizedtext/text.1)
+[summary_text3.txt](summarized_text/summary_text3.txt)
