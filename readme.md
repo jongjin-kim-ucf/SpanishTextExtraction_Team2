@@ -1,5 +1,21 @@
 # This is the team project in the course STA 7722 by Dr. Alexander Mantzaris.
 
+## Getting Started
+
+To run the project, please execute `main.ipynb`. This notebook combines all the work from separate Python files, which have been organized by specific tasks.
+
+### Running `main.ipynb`
+
+1. Clone the repository to your local machine.
+2. Ensure that you have installed the required dependencies mentioned in the `requirements.txt` file.
+3. Open the Jupyter Notebook by running `jupyter notebook` in your terminal or command prompt.
+4. Navigate to the project directory and open `main.ipynb`.
+5. Run all the cells in the notebook to see the output.
+
+By following these steps, you will be able to run the project and observe the results of the integrated tasks from the separate Python files.
+
+
+
 ## Team 2: Jongjin Kim, Ifte Khairul Islam, Chandra Kundu, Ibrahim Almansour.
 
 All team members, please update this document to make sure that you are familiar with the github repository.
@@ -35,8 +51,4 @@ Jongjin Kim - Extract Texts
 Ifte Khairul Islam - Text Translator
 Ibrahim Almansour - Text Summarizer.
 
-(Challenges)
-Picture 1 - Works best because there is no distortion.
-Picture 2 - Works better in the bottom part than the top part. The top part has a distortion.
-Picture 3 - A lot of distortion makes it hard to apprehend.
-Picture 4 - Multiple areas detection is needed. Also, the windows of the building were detected as a rectangle area.
+

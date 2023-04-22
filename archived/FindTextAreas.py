@@ -121,9 +121,18 @@ def detecttextarea(img_path, out_path):
     return boxes, results
 
 
+
+
+
+
 if __name__ == '__main__':
-    for i in range(1, 5):
-        img_path = f"training/training{i}.png"
-        out_path = f"boxed_images/rectanglebox{i}.jpg"
-        rects, texts = detecttextarea(img_path, out_path)   
+    # for i in range(1, 5):
+    #     img_path = f"training/training{i}.png"
+    #     out_path = f"boxed_images/rectanglebox{i}.jpg"
+    #     rects, texts = detecttextarea(img_path, out_path)   
+
+    img_path = "training/training1.png"
+    out_path = "boxed_images/rectanglebox1.jpg"
+    res = detecttext2(img_path)
+    print(res)
                 
