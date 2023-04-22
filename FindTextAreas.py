@@ -13,7 +13,7 @@ def detecttextarea(img_path, out_path):
     rH = H / float(newH)
     image = cv2.resize(image, (newW, newH))
     (H, W) = image.shape[:2]
-    gray_img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray_img = cv2.cvtColor(orig, cv2.COLOR_BGR2GRAY)
 
     # define the two output layer names for the EAST detector model that
     # we are interested -- the first is the output probabilities and the
@@ -24,7 +24,7 @@ def detecttextarea(img_path, out_path):
 
     # load the pre-trained EAST text detector
     print("[INFO] loading EAST text detector...")
-    net = cv2.dnn.readNet('frozen_east_text_detection.pb')
+    net = cv2.dnn.readNet('saved_models/frozen_east_text_detection.pb')
 
     # construct a blob from the image and then perform a forward pass of
     # the model to obtain the two output layer sets
@@ -104,7 +104,7 @@ def detecttextarea(img_path, out_path):
         w = endX - startX
         h = endY - startY
 
-        crop_img = gray_img[endY:endY+h, startX:startX+w]
+        crop_img = gray_img[startY:startY+h, startX:startX+w]
 
         
         # Pass the cropped image to Tesseract OCR and get the output text
@@ -118,7 +118,7 @@ def detecttextarea(img_path, out_path):
 
     cv2.imwrite(out_path, orig)
     
-    return orig, results
+    return boxes, results
 
 
 if __name__ == '__main__':
