@@ -3,49 +3,47 @@ from sumy.summarizers.text_rank import TextRankSummarizer
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.utils import get_stop_words
 
+def summarize_text(text, lang = "english"):
+
+    # Set up the parser and tokenizer
+    parser = PlaintextParser.from_string(text, Tokenizer(lang))
+    
+    # Set up the summarizer
+    summarizer = TextRankSummarizer()
+    
+    # Set the language for stop words
+    summarizer.stop_words = get_stop_words(lang)
+    
+    # Generate a summary of 2 sentences
+    summary = summarizer(parser.document, sentences_count=2)
+    
+    # Print the summary
+    outs = []
+    for sentence in summary:
+        outs.append(sentence._text)
+
+    out = "\n".join(outs)
+
+    return out
+
+
+if __name__ == "__main__":
+    # Load the text to be summarized 1st image   
+    text = "Walruses are known for their distinctive appearance, which includes long tusks, whiskers, and a massive barrel-shaped body. They are found mainly in the Arctic Ocean and the subarctic seas of the Northern Hemisphere. Walruses can weigh up to 1.5 tons (3,000 pounds) or more, with males often being larger than females. Their skin is thick and wrinkled, with a layer of fat underneath to keep them warm in the cold arctic waters. A walrus' tusks can grow up to 3 feet (1 meter) long and serve multiple purposes, such as establishing dominance, breaking ice, and helping the walrus crawl onto land or ice. They have long whiskers that play a key role in searching for food on the seabed, which are very sensitive and can detect small movements. Walruses are social animals and often gather in large groups called herds, which can number hundreds or even thousands of individuals. They are well adapted for life in the Arctic, with the ability to dive deep into the ocean in search of food, which mainly consists of bivalve molluscs such as clams. Their whiskers play a crucial role in locating food on the seabed, since they are very sensitive and can detect small movements or vibrations. Walruses are found more in the Arctic Ocean and at the south pole. Walruses like to socialize animals and for groups."
+    out = summarize_text(text)
+    output_file = "summarized_text/text1.txt"
+    with open(output_file, 'a', encoding='utf-8') as file:
+        file.write(out)
+
+'''
 # Load the text to be summarized
 text = "Las morsas son conocidas por su apariencia distintiva, que incluye largos colmillos, bigotes y un cuerpo masivo en forma de barril. Se encuentran principalmente en el Océano Ártico y los mares subárticos del hemisferio norte. Las morsas pueden pesar hasta 1,5 toneladas (3000 libras) o más, y los machos suelen ser más grandes que las hembras. Su piel es gruesa y arrugada, con una capa de grasa debajo para mantenerlos calientes en las frías aguas del Ártico. Los colmillos de una morsa pueden crecer hasta 3 pies (1 metro) de largo y sirven para múltiples propósitos, como establecer el dominio, romper el hielo y ayudar a la morsa a arrastrarse hacia la tierra o el hielo. Tienen bigotes largos que juegan un papel clave en la búsqueda de comida en el fondo marino, que son muy sensibles y pueden detectar pequeños movimientos. Las morsas son animales sociales y, a menudo, se reúnen en grandes grupos llamados manadas, que pueden constar de cientos o incluso miles de individuos. Están bien adaptados para la vida en el Ártico, con la capacidad de sumergirse en las profundidades del océano en busca de alimento, que consiste principalmente en moluscos bivalvos como las almejas. Sus bigotes juegan un papel crucial en la localización de alimentos en el fondo marino, ya que son muy sensibles y pueden detectar pequeños movimientos o vibraciones. Las morsas se encuentran más en el Océano Ártico y en el polo sur. A las morsas les gusta socializar animales y para grupos"
 
-# Set up the parser and tokenizer
-parser = PlaintextParser.from_string(text, Tokenizer("spanish"))
-
-# Set up the summarizer
-summarizer = TextRankSummarizer()
-
-# Set the language for stop words
-summarizer.stop_words = get_stop_words("spanish")
-
-# Generate a summary of 2 sentences
-summary = summarizer(parser.document, sentences_count=2)
-
-# Print the summary
-for sentence in summary:
-    print(sentence)
-  
     
-# Load the text to be summarized 1st image   
-text = "Walruses are known for their distinctive appearance, which includes long tusks, whiskers, and a massive barrel-shaped body. They are found mainly in the Arctic Ocean and the subarctic seas of the Northern Hemisphere. Walruses can weigh up to 1.5 tons (3,000 pounds) or more, with males often being larger than females. Their skin is thick and wrinkled, with a layer of fat underneath to keep them warm in the cold arctic waters. A walrus' tusks can grow up to 3 feet (1 meter) long and serve multiple purposes, such as establishing dominance, breaking ice, and helping the walrus crawl onto land or ice. They have long whiskers that play a key role in searching for food on the seabed, which are very sensitive and can detect small movements. Walruses are social animals and often gather in large groups called herds, which can number hundreds or even thousands of individuals. They are well adapted for life in the Arctic, with the ability to dive deep into the ocean in search of food, which mainly consists of bivalve molluscs such as clams. Their whiskers play a crucial role in locating food on the seabed, since they are very sensitive and can detect small movements or vibrations. Walruses are found more in the Arctic Ocean and at the south pole. Walruses like to socialize animals and for groups."
 
-# Set up the parser and tokenizer
-parser = PlaintextParser.from_string(text, Tokenizer("english"))
-
-# Set up the summarizer
-summarizer = TextRankSummarizer()
-
-# Set the language for stop words
-summarizer.stop_words = get_stop_words("english")
-
-# Generate a summary of 2 sentences
-summary = summarizer(parser.document, sentences_count=2)
-
-# Print the summary
-for sentence in summary:
-    print(sentence)
 
 #They have long whiskers that play a key role in searching for food on the seabed, which are very sensitive and can detect small movements.
 #Walruses are found more in the Arctic Ocean and at the south pole.
-
-
 
 
 # Load the text to be summarized 2nd image 
@@ -121,3 +119,4 @@ for sentence in summary4:
     print(sentence)
 #In the kingdom of numbers, where data resides, A world of patterns and secrets hides.
 #Statistics, the art that seeks the truth to transmit, From chaos, order, finds a way.
+'''

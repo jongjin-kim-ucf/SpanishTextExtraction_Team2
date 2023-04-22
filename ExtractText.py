@@ -1,14 +1,11 @@
 import cv2
-#import pyocr
-#import pyocr.builders
-#from PIL import Image
 import pytesseract
 import os
 import csv
 
 os.environ['TESSDATA_PREFIX'] = 'C:/Program Files/Tesseract-OCR/tessdata/'
 
-def extract_text(img_path):
+def extract_text(img_path, out_path):
     # Read image with opencv
     img = cv2.imread(img_path)
 
@@ -33,16 +30,27 @@ def extract_text(img_path):
             parse_text.append(word_list)
             word_list = []
 
+    with open(out_path, "w", newline = "") as file:
+        csv.writer(file, delimiter = " ").writerows(parse_text)
+
+    results = []
+    for inner_list in parse_text:
+        if inner_list:  # check if the inner list is not empty
+            string = ' '.join(inner_list)
+            results.append(string)
+
+    out = "".join(results)
+
     # Print the extracted text
-    return parse_text
+    return out
 
 if __name__ == "__main__":
     for i in range(1, 5):
         img_path = f"training/training{i}.png"
-        parse_text = extract_text(img_path)
+        out_path = f"saved_texts/text{i}.txt"
+        parse_text = extract_text(img_path, out_path)
         print(parse_text)
-        with open(f"saved_texts/text{i}.txt", "w", newline = "") as file:
-            csv.writer(file, delimiter = " ").writerows(parse_text)
+
 
     # img = cv2.imread("training/training4.png")
     # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

@@ -1,7 +1,3 @@
-
-
-
-
 Las morsas son conocidas por su apariencia distintiva, que incluye largos
 colmillos, bigotes y un cuerpo masivo en forma de barril. Se encuentran
 principalmente en el Océano Ártico y los mares subárticos del hemisferio
@@ -12,7 +8,7 @@ frías aguas del Ártico. Los colmillos de una morsa pueden crecer hasta 3
 pies (1 metro) de largo y sirven para múltiples propósitos, como establecer
 el dominio, romper el hielo y ayudar a la morsa a arrastrarse hacia la tierra
 o el hielo. Tienen bigotes largos que juegan un papel clave en la búsqueda
-de comida en el fondo marino, que son muy sensibles y pueden detectar
+de comida en el fondo marino, que son muy sensibles y pueden detectar g
 pequeños movimientos. Las morsas son animales sociales y, a menudo, se
 reúnen en grandes grupos llamados manadas, que pueden constar de
 cientos o incluso miles de individuos. Están bien adaptados para la vida en
@@ -23,6 +19,3 @@ alimentos en el fondo marino, ya que son muy sensibles y pueden detectar
 pequeños movimientos o vibraciones. Las morsas se encuentran más en el
 Océano Ártico y en el polo sur. A las morsas les gusta socializar animales y
 para grupos.
-
-
-
